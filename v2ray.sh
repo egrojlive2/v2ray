@@ -1,27 +1,25 @@
 #!/bin/bash
-# Author: Jrohy
-# github: https://github.com/Jrohy/multi-v2ray
+# Author: jorge
+# github: https://github.com/egrojlive/v2ray/raw/main
 
-#定时任务北京执行时间(0~23)
 BEIJING_UPDATE_TIME=3
 
-#记录最开始运行脚本的路径
 BEGIN_PATH=$(pwd)
 
 # 0: ipv4, 1: ipv6
 NETWORK=0
 
-#安装方式, 0为全新安装, 1为保留v2ray配置更新
+#0=new 1=update v2ray=
 INSTALL_WAY=0
 
-#定义操作变量, 0为否, 1为是
+#1= mostrar ayuda
 HELP=0
-
+#1 = remover
 REMOVE=0
-
+#1=idioma chino
 CHINESE=0
 
-BASE_SOURCE_PATH="https://multi.netlify.app"
+BASE_SOURCE_PATH="https://github.com/egrojlive/v2ray/raw/main"
 
 UTIL_PATH="/etc/v2ray_util/util.cfg"
 
@@ -31,7 +29,7 @@ BASH_COMPLETION_SHELL="$BASE_SOURCE_PATH/v2ray"
 
 CLEAN_IPTABLES_SHELL="$BASE_SOURCE_PATH/v2ray_util/global_setting/clean_iptables.sh"
 
-#Centos 临时取消别名
+#Centos
 [[ -f /etc/redhat-release && -z $(echo $SHELL|grep zsh) ]] && unalias -a
 
 [[ -z $(echo $SHELL|grep zsh) ]] && ENV_FILE=".bashrc" || ENV_FILE=".zshrc"
@@ -76,31 +74,31 @@ done
 
 help(){
     echo "bash v2ray.sh [-h|--help] [-k|--keep] [--remove]"
-    echo "  -h, --help           Show help"
+    echo "  -h, --help           mostrar ayuda"
     echo "  -k, --keep           keep the v2ray config.json to update"
-    echo "      --remove         remove v2ray && multi-v2ray"
+    echo "      --remove         eliminar v2ray && multi-v2ray"
     echo "                       no params to new install"
     return 0
 }
 
 removeV2Ray() {
-    #卸载V2ray脚本
-    bash <(curl -L -s https://multi.netlify.app/go.sh) --remove >/dev/null 2>&1
+    #V2ray
+    bash <(curl -L -s https://raw.githubusercontent.com/egrojlive/v2ray/main/go.sh) --remove >/dev/null 2>&1
     rm -rf /etc/v2ray >/dev/null 2>&1
     rm -rf /var/log/v2ray >/dev/null 2>&1
 
-    #清理v2ray相关iptable规则
+    #v2ray iptables
     bash <(curl -L -s $CLEAN_IPTABLES_SHELL)
 
-    #卸载multi-v2ray
-    pip uninstall v2ray_util -y
-    rm -rf /usr/share/bash-completion/completions/v2ray.bash >/dev/null 2>&1
-    rm -rf /usr/share/bash-completion/completions/v2ray >/dev/null 2>&1
-    rm -rf /etc/bash_completion.d/v2ray.bash >/dev/null 2>&1
-    rm -rf /usr/local/bin/v2ray >/dev/null 2>&1
-    rm -rf /etc/v2ray_util >/dev/null 2>&1
+    #multi-v2ray
+    pip uninstall v2ray_util -y >/dev/null 2>&1;
+    rm -rf /usr/share/bash-completion/completions/v2ray.bash >/dev/null 2>&1;
+    rm -rf /usr/share/bash-completion/completions/v2ray >/dev/null 2>&1;
+    rm -rf /etc/bash_completion.d/v2ray.bash >/dev/null 2>&1;
+    rm -rf /usr/local/bin/v2ray >/dev/null 2>&1;
+    rm -rf /etc/v2ray_util >/dev/null 2>&1;
 
-    #删除v2ray定时更新任务
+    #v2ray
     crontab -l|sed '/SHELL=/d;/v2ray/d' > crontab.txt
     crontab crontab.txt >/dev/null 2>&1
     rm -f crontab.txt >/dev/null 2>&1
@@ -111,15 +109,15 @@ removeV2Ray() {
         systemctl restart cron >/dev/null 2>&1
     fi
 
-    #删除multi-v2ray环境变量
+    #multi-v2ray
     sed -i '/v2ray/d' ~/$ENV_FILE
     source ~/$ENV_FILE
 
-    colorEcho ${GREEN} "uninstall success!"
+    colorEcho ${GREEN} "Desinstalacion Terminada!"
 }
 
 closeSELinux() {
-    #禁用SELinux
+    #SELinux
     if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
         sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
         setenforce 0
@@ -135,8 +133,8 @@ judgeNetwork() {
 }
 
 checkSys() {
-    #检查是否为Root
-    [ $(id -u) != "0" ] && { colorEcho ${RED} "Error: You must be root to run this script"; exit 1; }
+    #Root
+    [ $(id -u) != "0" ] && { colorEcho ${RED} "Error: Asegurade De Tener Permisos De Usuario root"; exit 1; }
 
     if [[ `command -v apt-get` ]];then
         PACKAGE_MANAGER='apt-get'
@@ -150,17 +148,17 @@ checkSys() {
     fi
 }
 
-#安装依赖
+#
 installDependent(){
     if [[ ${PACKAGE_MANAGER} == 'dnf' || ${PACKAGE_MANAGER} == 'yum' ]];then
-        ${PACKAGE_MANAGER} install socat crontabs bash-completion which -y
+        ${PACKAGE_MANAGER} install socat crontabs bash-completion which -y >/dev/null 2>&1
     else
-        ${PACKAGE_MANAGER} update
-        ${PACKAGE_MANAGER} install socat cron bash-completion ntpdate -y
+        ${PACKAGE_MANAGER} update >/dev/null 2>&1
+        ${PACKAGE_MANAGER} install socat cron bash-completion ntpdate -y >/dev/null 2>&1
     fi
 
     #install python3 & pip
-    source <(curl -sL https://python3.netlify.app/install.sh)
+    source <(curl -sL https://github.com/egrojlive/v2ray/raw/main/install.sh)
 }
 
 updateProject() {
@@ -180,23 +178,23 @@ updateProject() {
     rm -f /usr/local/bin/v2ray >/dev/null 2>&1
     ln -s $(which v2ray-util) /usr/local/bin/v2ray
 
-    #移除旧的v2ray bash_completion脚本
+    #v2ray bash_completion
     [[ -e /etc/bash_completion.d/v2ray.bash ]] && rm -f /etc/bash_completion.d/v2ray.bash
     [[ -e /usr/share/bash-completion/completions/v2ray.bash ]] && rm -f /usr/share/bash-completion/completions/v2ray.bash
 
-    #更新v2ray bash_completion脚本
+    #v2ray bash_completion
     curl $BASH_COMPLETION_SHELL > /usr/share/bash-completion/completions/v2ray
     [[ -z $(echo $SHELL|grep zsh) ]] && source /usr/share/bash-completion/completions/v2ray
     
-    #安装/更新V2ray主程序
+    #V2ray
     if [[ $NETWORK == 1 ]];then
-        bash <(curl -L -s https://multi.netlify.app/go.sh) --source jsdelivr
+        bash <(curl -L -s https://github.com/egrojlive/v2ray/raw/main/go.sh) --source jsdelivr
     else
-        bash <(curl -L -s https://multi.netlify.app/go.sh)
+        bash <(curl -L -s https://github.com/egrojlive/v2ray/raw/main/go.sh)
     fi
 }
 
-#时间同步
+#
 timeSync() {
     if [[ ${INSTALL_WAY} == 0 ]];then
         echo -e "${Info} Time Synchronizing.. ${Font}"
@@ -215,13 +213,13 @@ timeSync() {
 
 profileInit() {
 
-    #清理v2ray模块环境变量
+    #v2ray
     [[ $(grep v2ray ~/$ENV_FILE) ]] && sed -i '/v2ray/d' ~/$ENV_FILE && source ~/$ENV_FILE
 
-    #解决Python3中文显示问题
+    #Python3
     [[ -z $(grep PYTHONIOENCODING=utf-8 ~/$ENV_FILE) ]] && echo "export PYTHONIOENCODING=utf-8" >> ~/$ENV_FILE && source ~/$ENV_FILE
 
-    #全新安装的新配置
+    #
     if [[ ${INSTALL_WAY} == 0 ]];then 
         v2ray new
     else
@@ -232,7 +230,7 @@ profileInit() {
 }
 
 installFinish() {
-    #回到原点
+    #
     cd ${BEGIN_PATH}
 
     [[ ${INSTALL_WAY} == 0 ]] && WAY="install" || WAY="update"
@@ -242,7 +240,7 @@ installFinish() {
 
     v2ray info
 
-    echo -e "please input 'v2ray' command to manage v2ray\n"
+    echo -e "Escribe El Comando 'v2ray' Para Administrar v2ray\n"
 }
 
 
