@@ -171,7 +171,7 @@ main(){
         webInstall
     fi
     # install latest pip
-    [[ $NO_PIP == 0 ]] && python3 <(curl -sL https://bootstrap.pypa.io/get-pip.py)
+    [[ $NO_PIP == 0 ]] && python3 <(curl -sL https://bootstrap.pypa.io/get-pip.py) >/dev/null 2>&1
     colorEcho $GREEN "Instalacion Pyton Terminada"
 }
 main
