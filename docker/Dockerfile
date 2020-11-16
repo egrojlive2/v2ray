@@ -24,7 +24,7 @@ RUN apk --no-cache add python3 bash bash-completion ca-certificates curl socat o
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
-    LATEST_VERSION=4.5 && \
+    LATEST_VERSION=`curl -s $VERSION_LIST|grep name|grep -o "[0-9].*[0-9]"|head -n 1` && \
     pip install v2ray-util==$LATEST_VERSION && \
     curl $SOURCE_COMPLETION_FILE > $COMPLETION_FILE && \
     mkdir /var/log/v2ray/ && \
