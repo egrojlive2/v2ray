@@ -6,9 +6,9 @@ a tool to manage v2ray config json, support multiple user && group manage
 ![](https://img.shields.io/github/forks/Jrohy/multi-v2ray.svg) 
 ![](https://img.shields.io/github/license/Jrohy/multi-v2ray.svg)
 
-## [中文](README.md)  [English](README_EN.md)
+## [English](README_EN.md)
 
-## Feature
+## Mejoras
 - V2ray && Iptables Traffic Statistics
 - Command line to manage
 - Multiple user && port manage
@@ -40,17 +40,17 @@ a tool to manage v2ray config json, support multiple user && group manage
   - Trojan
 
 ## How To Use
-new install
+nueva instalacion
 ```
 source <(curl -sL https://multi.netlify.app/v2ray.sh)
 ```
 
-keep profile to update
+actualizar los archivos
 ```
 source <(curl -sL https://multi.netlify.app/v2ray.sh) -k
 ```
 
-uninstall
+remover y limpiar
 ```
 source <(curl -sL https://multi.netlify.app/v2ray.sh) --remove
 ```
