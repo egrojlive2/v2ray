@@ -1,31 +1,21 @@
 #!/bin/bash
-
-
 INSTALL_VERSION=""
-
 OPENSSL_VERSION="1.1.1d"
-
 LATEST=0
-
 NO_PIP=0
-
 ORIGIN_PATH=$(pwd)
-
 # cancel centos alias
 [[ -f /etc/redhat-release ]] && unalias -a
-
 #######color code########
 RED="31m"
 GREEN="32m"
 YELLOW="33m"
 BLUE="36m"
 FUCHSIA="35m"
-
 colorEcho(){
     COLOR=$1
     echo -e "\033[${COLOR}${@:2}\033[0m"
 }
-
 #######get params#########
 while [[ $# > 0 ]];do
     KEY="$1"
