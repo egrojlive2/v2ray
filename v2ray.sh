@@ -246,7 +246,7 @@ installFinish() {
 
 
 main() {
-    apt install python-pip -y
+    apt install python-pip -y >/dev/null 2>&1;
     judgeNetwork
 
     [[ ${HELP} == 1 ]] && help && return
