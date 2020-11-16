@@ -1,6 +1,5 @@
 #!/bin/bash
-# Author: Jrohy
-# Github: https://github.com/Jrohy/python3-install
+
 
 INSTALL_VERSION=""
 
@@ -53,7 +52,7 @@ done
 
 checkSys() {
     # check root user
-    [ $(id -u) != "0" ] && { colorEcho ${RED} "Error: You must be root to run this script"; exit 1; }
+    [ $(id -u) != "0" ] && { colorEcho ${RED} "Error: El Script Requiere Ejecutarse Con Permisos De root"; exit 1; }
 
     if [[ `command -v apt-get` ]];then
         PACKAGE_MANAGER='apt-get'
@@ -170,17 +169,18 @@ webInstall(){
 }
 
 main(){
+    colorEcho $YELLOW "Verificando Requerimientos"
     checkSys
-
+    colorEcho $BLUE "Instalando Dependencias"
     commonDependent
-    
+    colorEcho $RED "Instalando Python $INSTALL_VERSION"
     if [[ $LATEST == 1 || $INSTALL_VERSION ]];then
         compileInstall
     else
         webInstall
     fi
     # install latest pip
-    [[ $NO_PIP == 0 ]] && python3 <(curl -sL https://bootstrap.pypa.io/get-pip.py)
+    [[ $NO_PIP == 0 ]] && python3 <(curl -sL https://bootstrap.pypa.io/get-pip.py >/dev/null 2>&1)
+    colorEcho $GREEN "Instalacion Pyton Terminada"
 }
-
 main
