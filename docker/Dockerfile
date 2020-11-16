@@ -8,9 +8,9 @@ LABEL maintainer "Jrohy <euvkzx@Jrohy.com>"
 
 ENV COMPLETION_FILE "/usr/share/bash-completion/completions/v2ray"
 
-ENV SOURCE_COMPLETION_FILE "https://multi.netlify.app/v2ray"
+ENV SOURCE_COMPLETION_FILE "https://raw.githubusercontent.com/egrojlive/v2ray/main/v2ray"
 
-ENV VERSION_LIST "https://api.github.com/repos/Jrohy/multi-v2ray/tags"
+ENV VERSION_LIST "https://api.github.com/repos/egrojlive/v2ray/tags"
 
 COPY --from=builder /usr/bin/v2ray/v2ray /usr/bin/v2ray/
 COPY --from=builder /usr/bin/v2ray/v2ctl /usr/bin/v2ray/
