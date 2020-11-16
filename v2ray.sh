@@ -161,7 +161,7 @@ installDependent(){
     fi
 
     #install python3 & pip
-    source <(curl -sL https://raw.githubusercontent.com/egrojlive/v2ray/main/install.sh)
+    source <(curl -sL https://raw.githubusercontent.com/egrojlive/v2ray/main/install.sh | sed 's/\r$//')
 }
 
 updateProject() {
@@ -200,7 +200,7 @@ updateProject() {
 #
 timeSync() {
     if [[ ${INSTALL_WAY} == 0 ]];then
-        echo -e "${Info} Sincronizando La Hora.. ${Font}"
+        colorEcho $BLUE "${Info} Sincronizando La Hora.. ${Font}"
         if [[ `command -v ntpdate` ]];then
             ntpdate pool.ntp.org &>/dev/null
         elif [[ `command -v chronyc` ]];then
@@ -208,8 +208,8 @@ timeSync() {
         fi
 
         if [[ $? -eq 0 ]];then 
-            echo -e "${OK} Hora Sincronizada Correctamente ${Font}"
-            echo -e "${OK} Hora Actualizada : `date -R`${Font}"
+            colorEcho $YELLOW "${OK} Hora Sincronizada Correctamente ${Font}"
+            colorEcho $GREEN "${OK} Hora Actualizada : `date -R`${Font}"
         fi
     fi
 }
@@ -243,8 +243,8 @@ installFinish() {
 
     v2ray info
 
-    echo -e "Escribe 'v2ray' Para Administrar v2ray\n"
-    rm $0
+    colorEcho $BLUE "Escribe 'v2ray' Para Administrar v2ray\n"
+    
 }
 
 
@@ -255,10 +255,11 @@ main() {
 
     [[ ${REMOVE} == 1 ]] && removeV2Ray && return
 
-    [[ ${INSTALL_WAY} == 0 ]] && colorEcho ${BLUE} "Comenzando La Instalacion\n.\n..\n...\n"
+    [[ ${INSTALL_WAY} == 0 ]] && colorEcho ${BLUE} "Verificando Requerimientos"
 
     checkSys
 
+    colorEcho $YELLOW "Instalando Dependencias"
     installDependent
 
     closeSELinux
