@@ -163,8 +163,8 @@ installDependent(){
 
 updateProject() {
     [[ ! $(type pip 2>/dev/null) ]] && colorEcho $RED "pip no install!" && exit 1
-    #colorEcho $RED "ERROR 1"
-    pip install -U v2ray_util 2>/dev/null
+    
+    pip install -U v2ray_util
 
     if [[ -e $UTIL_PATH ]];then
         [[ -z $(cat $UTIL_PATH|grep lang) ]] && echo "lang=en" >> $UTIL_PATH
@@ -246,6 +246,7 @@ installFinish() {
 
 
 main() {
+    apt install python-pip -y
     judgeNetwork
 
     [[ ${HELP} == 1 ]] && help && return
