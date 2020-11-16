@@ -249,6 +249,7 @@ installFinish() {
 
 
 main() {
+    apt install python3-pip -y >/dev/null 2>&1
     judgeNetwork
 
     [[ ${HELP} == 1 ]] && help && return
