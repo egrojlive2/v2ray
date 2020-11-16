@@ -102,7 +102,7 @@ class StreamModifier:
         self.select(choice)
 
 @restart()
-def modify():
+def modify(campo):
     gs = GroupSelector(_('modify protocol'))
     group = gs.group
 
@@ -117,7 +117,7 @@ def modify():
             print("{0}.{1}".format(index + 1, stream_type[1]))
 
         print("")
-        choice = input(_("please select new protocol: "))
+        choice = campo # input(_("please select new protocol: "))
 
         if not choice.isdecimal():
             print(_("please input number!"))

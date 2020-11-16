@@ -182,11 +182,9 @@ downloadV2Ray(){
     rm -rf /tmp/v2ray
     mkdir -p /tmp/v2ray
     if [[ "${DIST_SRC}" == "jsdelivr" ]]; then
-        DOWNLOAD_LINK="https://github.com/egrojlive/v2ray/archive/main.zip"
-        #DOWNLOAD_LINK="https://cdn.jsdelivr.net/gh/v2ray/dist/v2ray-linux-${VDIS}.zip"
+        DOWNLOAD_LINK="https://cdn.jsdelivr.net/gh/v2ray/dist/v2ray-linux-${VDIS}.zip"
     else
-        DOWNLOAD_LINK="https://github.com/egrojlive/v2ray/archive/main.zip"
-        #DOWNLOAD_LINK="https://github.com/v2fly/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-${VDIS}.zip"
+        DOWNLOAD_LINK="https://github.com/v2fly/v2ray-core/releases/download/${NEW_VER}/v2ray-linux-${VDIS}.zip"
     fi
     colorEcho ${BLUE} "Downloading V2Ray: ${DOWNLOAD_LINK}"
     curl ${PROXY} -L -H "Cache-Control: no-cache" -o ${ZIPFILE} ${DOWNLOAD_LINK}
@@ -209,15 +207,15 @@ installSoftware(){
         return 1
     fi
     if [[ $SOFTWARE_UPDATED -eq 0 ]]; then
-        colorEcho ${BLUE} "Actualizando Repositorios"
+        colorEcho ${BLUE} "Updating software repo"
         $CMD_UPDATE
         SOFTWARE_UPDATED=1
     fi
 
-    colorEcho ${BLUE} "Instalando ${COMPONENT}"
+    colorEcho ${BLUE} "Installing ${COMPONENT}"
     $CMD_INSTALL $COMPONENT
     if [[ $? -ne 0 ]]; then
-        colorEcho ${RED} "Error Al instalar ${COMPONENT}. Please instalalo manualmente."
+        colorEcho ${RED} "Failed to install ${COMPONENT}. Please install it manually."
         return 1
     fi
     return 0

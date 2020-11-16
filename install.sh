@@ -71,17 +71,17 @@ checkSys() {
 }
 
 commonDependent(){
-    [[ $PACKAGE_MANAGER == 'apt-get' ]] && ${PACKAGE_MANAGER} update -y
-    ${PACKAGE_MANAGER} install wget -y
+    [[ $PACKAGE_MANAGER == 'apt-get' ]] && ${PACKAGE_MANAGER} update -y >/dev/null 2>&1
+    ${PACKAGE_MANAGER} install wget -y >/dev/null 2>&1
 }
 
 compileDependent(){
     if [[ ${PACKAGE_MANAGER} == 'yum' || ${PACKAGE_MANAGER} == 'dnf' ]];then
-        ${PACKAGE_MANAGER} groupinstall -y "Development tools"
-        ${PACKAGE_MANAGER} install -y tk-devel xz-devel gdbm-devel sqlite-devel bzip2-devel readline-devel zlib-devel openssl-devel libffi-devel
+        ${PACKAGE_MANAGER} groupinstall -y "Development tools" >/dev/null 2>&1
+        ${PACKAGE_MANAGER} install -y tk-devel xz-devel gdbm-devel sqlite-devel bzip2-devel readline-devel zlib-devel openssl-devel libffi-devel >/dev/null 2>&1
     else
-        ${PACKAGE_MANAGER} install -y build-essential
-        ${PACKAGE_MANAGER} install -y uuid-dev tk-dev liblzma-dev libgdbm-dev libsqlite3-dev libbz2-dev libreadline-dev zlib1g-dev libncursesw5-dev libssl-dev libffi-dev
+        ${PACKAGE_MANAGER} install -y build-essential >/dev/null 2>&1
+        ${PACKAGE_MANAGER} install -y uuid-dev tk-dev liblzma-dev libgdbm-dev libsqlite3-dev libbz2-dev libreadline-dev zlib1g-dev libncursesw5-dev libssl-dev libffi-dev >/dev/null 2>&1
     fi
 }
 
@@ -153,17 +153,17 @@ webInstall(){
     if [[ ${PACKAGE_MANAGER} == 'yum' || ${PACKAGE_MANAGER} == 'dnf' ]];then
         if ! type python3 >/dev/null 2>&1;then
             if [[ ${PACKAGE_MANAGER} == 'yum' ]];then
-                ${PACKAGE_MANAGER} install epel-release -y
-                ${PACKAGE_MANAGER} install https://repo.ius.io/ius-release-el7.rpm -y
-                ${PACKAGE_MANAGER} install python36u -y
+                ${PACKAGE_MANAGER} install epel-release -y >/dev/null 2>&1
+                ${PACKAGE_MANAGER} install https://repo.ius.io/ius-release-el7.rpm -y >/dev/null 2>&1
+                ${PACKAGE_MANAGER} install python36u -y >/dev/null 2>&1
                 [[ ! -e /bin/python3 ]] && ln -s /bin/python3.6 /bin/python3
             elif [[ ${PACKAGE_MANAGER} == 'dnf' ]];then
-                ${PACKAGE_MANAGER} install python3 -y
+                ${PACKAGE_MANAGER} install python3 -y >/dev/null 2>&1
             fi
         fi
     else
         if ! type python3 >/dev/null 2>&1;then
-            ${PACKAGE_MANAGER} install python3 -y
+            ${PACKAGE_MANAGER} install python3 -y >/dev/null 2>&1
         fi
         ${PACKAGE_MANAGER} install python3-distutils -y >/dev/null 2>&1
     fi

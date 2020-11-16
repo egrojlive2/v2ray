@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 import v2ray_util
 
-with open("README.md", "r", encoding='UTF-8') as fh:
+with open("README_EN.md", "r", encoding='UTF-8') as fh:
     long_description = fh.read()
 
 setup(
@@ -32,6 +32,7 @@ setup(
         'Development Status :: 5 - Production/Stable',
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Natural Language :: English",
+        "Natural Language :: Spanish",
         'Natural Language :: Chinese (Simplified)',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',

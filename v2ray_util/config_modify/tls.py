@@ -22,7 +22,7 @@ class TLSModifier:
         print(_("1. Let's Encrypt certificate(auto create, please prepare domain)"))
         print(_("2. Customize certificate(prepare certificate file paths)"))
         print("")
-        choice = readchar(_("please select: "))
+        choice = '1' #readchar(_("please select: "))
         input_domain = self.domain
         if choice == "1":
             if not input_domain:
@@ -69,7 +69,7 @@ class TLSModifier:
         self.writer.write_tls(False)
         return True
 
-def modify():
+def modify(campo):
     gs = GroupSelector(_('modify tls'))
     group = gs.group
 
@@ -86,7 +86,7 @@ def modify():
         print("")
         print(_("1.open TLS"))
         print(_("2.close TLS"))
-        choice = readchar(_("please select: "))
+        choice = campo # readchar(_("please select: "))
         if not choice:
             return
         if not choice in ("1", "2"):

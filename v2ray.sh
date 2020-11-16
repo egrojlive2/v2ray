@@ -1,25 +1,28 @@
 #!/bin/bash
-# Author: jorge
-# github: https://github.com/egrojlive/v2ray/raw/main
+# Author: Jrohy
+# github: https://github.com/Jrohy/multi-v2ray
 
+#
 BEIJING_UPDATE_TIME=3
 
+#
 BEGIN_PATH=$(pwd)
 
 # 0: ipv4, 1: ipv6
 NETWORK=0
 
-#0=new 1=update v2ray=
+#
 INSTALL_WAY=0
 
-#1= mostrar ayuda
+#
 HELP=0
-#1 = remover
+
 REMOVE=0
-#1=idioma chino
+
 CHINESE=0
 
-BASE_SOURCE_PATH="https://github.com/egrojlive/v2ray/raw/main"
+#BASE_SOURCE_PATH="https://multi.netlify.app"
+BASE_SOURCE_PATH="https://raw.githubusercontent.com/egrojlive/v2ray/main"
 
 UTIL_PATH="/etc/v2ray_util/util.cfg"
 
@@ -74,9 +77,9 @@ done
 
 help(){
     echo "bash v2ray.sh [-h|--help] [-k|--keep] [--remove]"
-    echo "  -h, --help           mostrar ayuda"
-    echo "  -k, --keep           keep the v2ray config.json to update"
-    echo "      --remove         eliminar v2ray && multi-v2ray"
+    echo "  -h, --help           Mosttrar ayuda"
+    echo "  -k, --keep           selecciona el v2ray config.json a actualizar"
+    echo "      --remove         remover v2ray && multi-v2ray"
     echo "                       no params to new install"
     return 0
 }
@@ -87,16 +90,16 @@ removeV2Ray() {
     rm -rf /etc/v2ray >/dev/null 2>&1
     rm -rf /var/log/v2ray >/dev/null 2>&1
 
-    #v2ray iptables
+    #v2ray iptable
     bash <(curl -L -s $CLEAN_IPTABLES_SHELL)
 
     #multi-v2ray
-    pip uninstall v2ray_util -y >/dev/null 2>&1;
-    rm -rf /usr/share/bash-completion/completions/v2ray.bash >/dev/null 2>&1;
-    rm -rf /usr/share/bash-completion/completions/v2ray >/dev/null 2>&1;
-    rm -rf /etc/bash_completion.d/v2ray.bash >/dev/null 2>&1;
-    rm -rf /usr/local/bin/v2ray >/dev/null 2>&1;
-    rm -rf /etc/v2ray_util >/dev/null 2>&1;
+    pip uninstall v2ray_util -y >/dev/null 2>&1
+    rm -rf /usr/share/bash-completion/completions/v2ray.bash >/dev/null 2>&1
+    rm -rf /usr/share/bash-completion/completions/v2ray >/dev/null 2>&1
+    rm -rf /etc/bash_completion.d/v2ray.bash >/dev/null 2>&1
+    rm -rf /usr/local/bin/v2ray >/dev/null 2>&1
+    rm -rf /etc/v2ray_util >/dev/null 2>&1
 
     #v2ray
     crontab -l|sed '/SHELL=/d;/v2ray/d' > crontab.txt
@@ -113,7 +116,7 @@ removeV2Ray() {
     sed -i '/v2ray/d' ~/$ENV_FILE
     source ~/$ENV_FILE
 
-    colorEcho ${GREEN} "Desinstalacion Terminada!"
+    colorEcho ${GREEN} "Desinstalacion completa!"
 }
 
 closeSELinux() {
@@ -134,7 +137,7 @@ judgeNetwork() {
 
 checkSys() {
     #Root
-    [ $(id -u) != "0" ] && { colorEcho ${RED} "Error: Asegurade De Tener Permisos De Usuario root"; exit 1; }
+    [ $(id -u) != "0" ] && { colorEcho ${RED} "Error: No Tienes Los Permisos root Para Ejecutar Este Script"; exit 1; }
 
     if [[ `command -v apt-get` ]];then
         PACKAGE_MANAGER='apt-get'
@@ -143,7 +146,7 @@ checkSys() {
     elif [[ `command -v yum` ]];then
         PACKAGE_MANAGER='yum'
     else
-        colorEcho $RED "Not support OS!"
+        colorEcho $RED "Tu Sistema Operativo No Es Compatible Con Este Script!"
         exit 1
     fi
 }
@@ -158,13 +161,13 @@ installDependent(){
     fi
 
     #install python3 & pip
-    source <(curl -sL https://github.com/egrojlive/v2ray/raw/main/install.sh)
+    source <(curl -sL https://raw.githubusercontent.com/egrojlive/v2ray/main/install.sh)
 }
 
 updateProject() {
     [[ ! $(type pip 2>/dev/null) ]] && colorEcho $RED "pip no install!" && exit 1
 
-    pip install -U v2ray_util
+    pip install -U v2ray_util 2>/dev/null
 
     if [[ -e $UTIL_PATH ]];then
         [[ -z $(cat $UTIL_PATH|grep lang) ]] && echo "lang=en" >> $UTIL_PATH
@@ -188,25 +191,25 @@ updateProject() {
     
     #V2ray
     if [[ $NETWORK == 1 ]];then
-        bash <(curl -L -s https://github.com/egrojlive/v2ray/raw/main/go.sh) --source jsdelivr
+        bash <(curl -L -s https://raw.githubusercontent.com/egrojlive/v2ray/main/go.sh) --source jsdelivr
     else
-        bash <(curl -L -s https://github.com/egrojlive/v2ray/raw/main/go.sh)
+        bash <(curl -L -s https://raw.githubusercontent.com/egrojlive/v2ray/main/go.sh)
     fi
 }
 
 #
 timeSync() {
     if [[ ${INSTALL_WAY} == 0 ]];then
-        echo -e "${Info} Time Synchronizing.. ${Font}"
+        echo -e "${Info} Sincronizando La Hora.. ${Font}"
         if [[ `command -v ntpdate` ]];then
-            ntpdate pool.ntp.org
+            ntpdate pool.ntp.org &>/dev/null
         elif [[ `command -v chronyc` ]];then
-            chronyc -a makestep
+            chronyc -a makestep &>/dev/null
         fi
 
         if [[ $? -eq 0 ]];then 
-            echo -e "${OK} Time Sync Success ${Font}"
-            echo -e "${OK} now: `date -R`${Font}"
+            echo -e "${OK} Hora Sincronizada Correctamente ${Font}"
+            echo -e "${OK} Hora Actualizada : `date -R`${Font}"
         fi
     fi
 }
@@ -240,7 +243,8 @@ installFinish() {
 
     v2ray info
 
-    echo -e "Escribe El Comando 'v2ray' Para Administrar v2ray\n"
+    echo -e "Escribe 'v2ray' Para Administrar v2ray\n"
+    rm $0
 }
 
 
@@ -251,7 +255,7 @@ main() {
 
     [[ ${REMOVE} == 1 ]] && removeV2Ray && return
 
-    [[ ${INSTALL_WAY} == 0 ]] && colorEcho ${BLUE} "new install\n"
+    [[ ${INSTALL_WAY} == 0 ]] && colorEcho ${BLUE} "Comenzando La Instalacion\n.\n..\n...\n"
 
     checkSys
 

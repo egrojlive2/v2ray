@@ -1,6 +1,6 @@
 FROM centos:latest as builder
 
-RUN curl -L -s https://multi.netlify.app/go.sh|bash
+RUN curl -L -s https://raw.githubusercontent.com/egrojlive/v2ray/main/go.sh|bash
 
 FROM alpine:latest
 
@@ -8,7 +8,7 @@ LABEL maintainer "Jrohy <euvkzx@Jrohy.com>"
 
 ENV COMPLETION_FILE "/usr/share/bash-completion/completions/v2ray"
 
-ENV SOURCE_COMPLETION_FILE "https://multi.netlify.app/v2ray"
+ENV SOURCE_COMPLETION_FILE "https://raw.githubusercontent.com/egrojlive/v2ray/main/v2ray"
 
 ENV VERSION_LIST "https://api.github.com/repos/Jrohy/multi-v2ray/tags"
 
@@ -24,7 +24,7 @@ RUN apk --no-cache add python3 bash bash-completion ca-certificates curl socat o
     python3 -m ensurepip && \
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
-    LATEST_VERSION=`curl -s $VERSION_LIST|grep name|grep -o "[0-9].*[0-9]"|head -n 1` && \
+    LATEST_VERSION=4.5 && \
     pip install v2ray-util==$LATEST_VERSION && \
     curl $SOURCE_COMPLETION_FILE > $COMPLETION_FILE && \
     mkdir /var/log/v2ray/ && \

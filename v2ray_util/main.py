@@ -10,6 +10,7 @@ from .util_core.utils import ColorStr, open_port, loop_input_choice_number
 from .global_setting import stats_ctr, iptables_ctr, ban_bt, update_timer
 from .config_modify import base, multiple, ss, stream, tls, cdn
 
+
 def help():
     exec_name = sys.argv[0]
     from .util_core.config import Config
@@ -67,12 +68,15 @@ def help():
     log                  check v2ray log
         """.format(exec_name[exec_name.rfind("/") + 1:]))
 
+
 def updateSh():
     if os.path.exists("/.dockerenv"):
         subprocess.Popen("pip install -U v2ray_util", shell=True).wait()
     else:
-        subprocess.Popen("curl -Ls https://multi.netlify.app/v2ray.sh -o temp.sh", shell=True).wait()
+        subprocess.Popen(
+            "curl -Ls https://multi.netlify.app/v2ray.sh -o temp.sh", shell=True).wait()
         subprocess.Popen("bash temp.sh -k && rm -f temp.sh", shell=True).wait()
+
 
 def parse_arg():
     if len(sys.argv) == 1:
@@ -122,15 +126,22 @@ def parse_arg():
             V2ray.log()
         elif sys.argv[1] == "cdn":
             cdn.modify()
+    elif len(sys.argv) == 3:
+        if sys.argv[1] == "stream":
+            stream.modify(sys.argv[2])
+        elif sys.argv[1] == "tls":
+            tls.modify(sys.argv[2])
     else:
         if sys.argv[1] == "add":
             multiple.new_port(sys.argv[2])
     sys.exit(0)
 
+
 def service_manage():
-    show_text = (_("start v2ray"), _("stop v2ray"), _("restart v2ray"), _("v2ray status"), _("v2ray log"))
+    show_text = (_("start v2ray"), _("stop v2ray"), _(
+        "restart v2ray"), _("v2ray status"), _("v2ray log"))
     print("")
-    for index, text in enumerate(show_text): 
+    for index, text in enumerate(show_text):
         print("{}.{}".format(index + 1, text))
     choice = loop_input_choice_number(_("please select: "), len(show_text))
     if choice == 1:
@@ -144,10 +155,11 @@ def service_manage():
     elif choice == 5:
         V2ray.log()
 
+
 def user_manage():
     show_text = (_("add user"), _("add port"), _("del user"), _("del port"))
     print("")
-    for index, text in enumerate(show_text): 
+    for index, text in enumerate(show_text):
         print("{}.{}".format(index + 1, text))
     choice = loop_input_choice_number(_("please select: "), len(show_text))
     if not choice:
@@ -162,11 +174,12 @@ def user_manage():
     elif choice == 4:
         multiple.del_port()
 
+
 def profile_alter():
-    show_text = (_("modify email"), _("modify UUID"), _("modify alterID"), _("modify port"), _("modify stream"), _("modify tls"), 
-                _("modify tcpFastOpen"), _("modify dyn_port"), _("modify shadowsocks method"), _("modify shadowsocks password"), _("CDN mode(need domain)"))
+    show_text = (_("modify email"), _("modify UUID"), _("modify alterID"), _("modify port"), _("modify stream"), _("modify tls"),
+                 _("modify tcpFastOpen"), _("modify dyn_port"), _("modify shadowsocks method"), _("modify shadowsocks password"), _("CDN mode(need domain)"))
     print("")
-    for index, text in enumerate(show_text): 
+    for index, text in enumerate(show_text):
         print("{}.{}".format(index + 1, text))
     choice = loop_input_choice_number(_("please select: "), len(show_text))
     if not choice:
@@ -194,10 +207,12 @@ def profile_alter():
     elif choice == 11:
         cdn.modify()
 
+
 def global_setting():
-    show_text = (_("V2ray Traffic Statistics"), _("Iptables Traffic Statistics"), _("Ban Bittorrent"), _("Schedule Update V2ray"), _("Clean Log"), _("Change Language"))
+    show_text = (_("V2ray Traffic Statistics"), _("Iptables Traffic Statistics"), _(
+        "Ban Bittorrent"), _("Schedule Update V2ray"), _("Clean Log"), _("Change Language"))
     print("")
-    for index, text in enumerate(show_text): 
+    for index, text in enumerate(show_text):
         print("{}.{}".format(index + 1, text))
     choice = loop_input_choice_number(_("please select: "), len(show_text))
     if choice == 1:
@@ -218,6 +233,7 @@ def global_setting():
         print(ColorStr.yellow(_("please run again to become effective!")))
         sys.exit(0)
 
+
 def menu():
     V2ray.check()
     parse_arg()
@@ -225,10 +241,11 @@ def menu():
         print("")
         print(ColorStr.cyan(_("Welcome to v2ray-util")))
         print("")
-        show_text = (_("1.V2ray Manage"), _("2.Group Manage"), _("3.Modify Config"), _("4.Check Config"), _("5.Global Setting"), _("6.Update V2Ray"), _("7.Generate Client Json"))
-        for index, text in enumerate(show_text): 
+        show_text = (_("1.V2ray Manage"), _("2.Group Manage"), _("3.Modify Config"), _(
+            "4.Check Config"), _("5.Global Setting"), _("6.Update V2Ray"), _("7.Generate Client Json"))
+        for index, text in enumerate(show_text):
             if index % 2 == 0:
-                print('{:<20}'.format(text), end="")   
+                print('{:<20}'.format(text), end="")
             else:
                 print(text)
                 print("")
@@ -251,6 +268,7 @@ def menu():
             client.generate()
         else:
             break
+
 
 if __name__ == "__main__":
     menu()
