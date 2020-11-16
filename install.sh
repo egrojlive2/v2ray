@@ -13,12 +13,10 @@ YELLOW="33m"
 BLUE="36m"
 FUCHSIA="35m"
 
-colorEcho(){
-COLOR=$1
-echo -e "\033[${COLOR}${@:2}\033[0m"
-
+colorEcho() {
+    COLOR=$1
+    echo -e "\033[${COLOR}${@:2}\033[0m"
 }
-
 #######get params#########
 while [[ $# > 0 ]];do
     KEY="$1"

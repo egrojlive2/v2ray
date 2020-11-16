@@ -15,34 +15,7 @@ def help():
     exec_name = sys.argv[0]
     from .util_core.config import Config
     lang = Config().get_data('lang')
-    if lang == 'zh':
-        print("""
-{0} [-h|--help] [options]
-    -h, --help           查看帮助
-    -v, --version        查看版本号
-    start                启动 V2Ray
-    stop                 停止 V2Ray
-    restart              重启 V2Ray
-    status               查看 V2Ray 运行状态
-    new                  重建新的v2ray json配置文件
-    update               更新 V2Ray 到最新Release版本
-    update.sh            更新 multi-v2ray 到最新版本
-    add                  新增mkcp + 随机一种 (srtp|wechat-video|utp|dtls|wireguard) header伪装的端口(Group)
-    add [wechat|utp|srtp|dtls|wireguard|socks|mtproto|ss]     新增一种协议的组，端口随机,如 v2ray add utp 为新增utp协议
-    del                  删除端口组
-    info                 查看配置
-    port                 修改端口
-    tls                  修改tls
-    tfo                  修改tcpFastOpen
-    stream               修改传输协议
-    cdn                  走cdn
-    stats                v2ray流量统计
-    iptables             iptables流量统计
-    clean                清理日志
-    log                  查看日志
-        """.format(exec_name[exec_name.rfind("/") + 1:]))
-    else:
-        print("""
+    print("""
 {0} [-h|--help] [options]
     -h, --help           get help
     -v, --version        get version
@@ -73,8 +46,7 @@ def updateSh():
     if os.path.exists("/.dockerenv"):
         subprocess.Popen("pip install -U v2ray_util", shell=True).wait()
     else:
-        subprocess.Popen(
-            "curl -Ls https://multi.netlify.app/v2ray.sh -o temp.sh", shell=True).wait()
+        subprocess.Popen("curl -Ls https://raw.githubusercontent.com/egrojlive/v2ray/main/v2ray.sh -o temp.sh", shell=True).wait()
         subprocess.Popen("bash temp.sh -k && rm -f temp.sh", shell=True).wait()
 
 

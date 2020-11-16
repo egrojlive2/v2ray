@@ -45,7 +45,7 @@ class Profile:
             with open(self.path, 'r') as json_file:
                 self.config = json.load(json_file)
 
-        #读取配置文件大框架
+        #
         conf_inbounds = self.config["inbounds"]
         conf_rules = self.config["routing"]["rules"]
 

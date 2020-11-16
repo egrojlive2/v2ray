@@ -1,7 +1,4 @@
 #!/bin/bash
-# Author: Jrohy
-# github: https://github.com/Jrohy/multi-v2ray
-
 #
 BEIJING_UPDATE_TIME=3
 
@@ -166,7 +163,7 @@ installDependent(){
 
 updateProject() {
     [[ ! $(type pip 2>/dev/null) ]] && colorEcho $RED "pip no install!" && exit 1
-
+    #colorEcho $RED "ERROR 1"
     pip install -U v2ray_util 2>/dev/null
 
     if [[ -e $UTIL_PATH ]];then
@@ -202,9 +199,9 @@ timeSync() {
     if [[ ${INSTALL_WAY} == 0 ]];then
         colorEcho $BLUE "${Info} Sincronizando La Hora.. ${Font}"
         if [[ `command -v ntpdate` ]];then
-            ntpdate pool.ntp.org &>/dev/null
+            ntpdate pool.ntp.org
         elif [[ `command -v chronyc` ]];then
-            chronyc -a makestep &>/dev/null
+            chronyc -a makestep
         fi
 
         if [[ $? -eq 0 ]];then 
@@ -249,7 +246,6 @@ installFinish() {
 
 
 main() {
-    apt install python3-pip -y >/dev/null 2>&1
     judgeNetwork
 
     [[ ${HELP} == 1 ]] && help && return

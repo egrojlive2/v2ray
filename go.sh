@@ -1,13 +1,4 @@
 #!/bin/bash
-
-# This file is accessible as https://multi.netlify.app/go.sh
-
-# If not specify, default meaning of return value:
-# 0: Success
-# 1: System error
-# 2: Application error
-# 3: Network error
-
 # CLI arguments
 PROXY=''
 HELP=''
