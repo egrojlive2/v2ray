@@ -1,4 +1,6 @@
 #!/bin/bash
+# Author: Jrohy
+# Github: https://github.com/Jrohy/python3-install
 
 INSTALL_VERSION=""
 
