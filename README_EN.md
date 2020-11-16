@@ -6,7 +6,7 @@ a tool to manage v2ray config json, support multiple user && group manage
 ![](https://img.shields.io/github/forks/Jrohy/multi-v2ray.svg) 
 ![](https://img.shields.io/github/license/Jrohy/multi-v2ray.svg)
 
-## [English](README_EN.md)
+## [Spanish](README_EN.md)
 
 ## Mejoras
 - V2ray && Iptables Traffic Statistics
@@ -19,7 +19,7 @@ a tool to manage v2ray config json, support multiple user && group manage
 - Ban bittorrent
 - Range port
 - TcpFastOpen
-- Vmess/Socks5/MTproto share link
+- Vmess/Socks5/MTproto Compartir link
 - Support protocol modify:
   - TCP
   - Fake http
@@ -39,7 +39,7 @@ a tool to manage v2ray config json, support multiple user && group manage
   - VLESS_XTLS
   - Trojan
 
-## How To Use
+## Metodo De Uso
 nueva instalacion
 ```
 source <(curl -sL https://multi.netlify.app/v2ray.sh)
@@ -55,35 +55,35 @@ remover y limpiar
 source <(curl -sL https://multi.netlify.app/v2ray.sh) --remove
 ```
 
-## Command Line
+## Linea De Comandos
 ```bash
 v2ray [-h|--help] [options]
-    -h, --help           get help
-    -v, --version        get version
-    start                start V2Ray
-    stop                 stop V2Ray
-    restart              restart V2Ray
-    status               check V2Ray status
-    new                  create new json profile
-    update               update v2ray to latest
-    update.sh            update multi-v2ray to latest
-    add                  random create mkcp + (srtp|wechat-video|utp|dtls|wireguard) fake header group
-    add [wechat|utp|srtp|dtls|wireguard|socks|mtproto|ss]     create special protocol, random new port
-    del                  delete port group
-    info                 check v2ray profile
-    port                 modify port
-    tls                  modify tls
-    tfo                  modify tcpFastOpen
-    stream               modify protocol
-    cdn                  cdn mode
+    -h, --help           Mostrar Ayuda De Comandos
+    -v, --version        Obtener Version
+    start                Iniciar Servicio V2Ray
+    stop                 Detener Servicio V2Ray
+    restart              Reiniciar Servicio V2Ray
+    status               Obtener El StatusV2Ray
+    new                  Crear Un Nuevo Json Documento
+    update               Actualizar v2ray A La Siguiente Version
+    update.sh            Actualizar multi-v2ray A La Siguiente Version
+    add                  Crear Random mkcp + (srtp|wechat-video|utp|dtls|wireguard) fake header group
+    add [wechat|utp|srtp|dtls|wireguard|socks|mtproto|ss]     Crear Protocolo Especial, Puerto Random nuevo
+    del                  Eliminar Puerto Grupo
+    info                 Obtener v2ray Link
+    port                 Modificar Puerto port
+    tls                  Modificar Tls
+    tfo                  Modificar tcpFastOpen
+    stream               Modificar protocolo
+    cdn                  cdn modo
     stats                v2ray traffic statistics
     iptables             iptables traffic statistics
-    clean                clean v2ray log
-    log                  check v2ray log
+    clean                Eliminar v2ray log
+    log                  Mostrar v2ray log
 ```
 
 ## Docker Run
-default will create random port + random header(srtp | wechat-video | utp | dtls) kcp profile  
+Configuracion Default Con Puerto Random + random header(srtp | wechat-video | utp | dtls) kcp profile  
 ```
 docker run -d --name v2ray --privileged --restart always --network host jrohy/v2ray
 ```
