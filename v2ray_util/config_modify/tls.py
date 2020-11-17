@@ -86,7 +86,7 @@ def modify(campo):
         print("")
         print(_("1.open TLS"))
         print(_("2.close TLS"))
-        choice = campo # readchar(_("please select: "))
+        choice = '1' # readchar(_("please select: "))
         if not choice:
             return
         if not choice in ("1", "2"):
