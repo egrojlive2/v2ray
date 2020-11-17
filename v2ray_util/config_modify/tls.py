@@ -15,19 +15,19 @@ class TLSModifier:
         self.alpn = alpn
         self.xtls = xtls
         self.writer = GroupWriter(group_tag, group_index)
-    
+        
     @restart(True)
-    def turn_on(self, need_restart=True):
+    def turn_on(self, campo, need_restart=True):
         print("")
         print(_("1. Let's Encrypt certificate(auto create, please prepare domain)"))
         print(_("2. Customize certificate(prepare certificate file paths)"))
         print("")
         choice = '1' #readchar(_("please select: "))
-        input_domain = self.domain
+        input_domain = campo
         if choice == "1":
             if not input_domain:
                 local_ip = get_ip()
-                input_domain = input(_("please input your vps domain: "))
+                # input_domain = input(_("please input your vps domain: "))
                 try:
                     if is_ipv4(local_ip):
                         socket.gethostbyname(input_domain)
@@ -94,6 +94,6 @@ def modify(campo):
             return
 
         if choice == '1':
-            tm.turn_on()
+            tm.turn_on(campo)
         elif choice == '2':
             tm.turn_off()
