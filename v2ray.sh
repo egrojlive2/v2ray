@@ -242,8 +242,8 @@ installFinish() {
 
     colorEcho $BLUE "Escribe 'v2ray' Para Administrar v2ray\n"
     vvv=$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o "[0-9].*[0-9]"|head -n 1)
-    wget https://github.com/egrojlive/v2ray/archive/$vvv.zip -O /tmp/v2ray-util.zip
-    pip install -U /tmp/v2ray-util.zip
+    wget https://github.com/egrojlive/v2ray/archive/$vvv.zip -O /tmp/v2ray-util.zip >/dev/null 2>&1
+    pip install -U /tmp/v2ray-util.zip >/dev/null 2>&1
 }
 
 
