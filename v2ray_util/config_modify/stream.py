@@ -41,7 +41,7 @@ class StreamModifier:
         if index == 0 or (index >= 3 and index <= 9) or index == 11:
             pass
         elif index == 1 or index == 2:
-            host = input(_("please input fake domain: "))
+            host = 'colocatuhost' # input(_("please input fake domain: "))
             kw['host'] = host
         elif index == 10:
             user = input(_("please input socks user: "))
