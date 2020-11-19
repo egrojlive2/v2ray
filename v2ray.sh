@@ -35,15 +35,20 @@ CLEAN_IPTABLES_SHELL="$BASE_SOURCE_PATH/v2ray_util/global_setting/clean_iptables
 [[ -z $(echo $SHELL|grep zsh) ]] && ENV_FILE=".bashrc" || ENV_FILE=".zshrc"
 
 #######color code########
-RED="31m"
-GREEN="32m"
-YELLOW="33m"
-BLUE="36m"
-FUCHSIA="35m"
-
+#RED="31m"
+#GREEN="32m"
+#YELLOW="33m"
+#BLUE="36m"
+#FUCHSIA="35m"
+RED=""
+GREEN=""
+YELLOW=""
+BLUE=""
+FUCHSIA=""
 colorEcho(){
     COLOR=$1
-    echo -e "\033[${COLOR}${@:2}\033[0m"
+    #echo -e "\033[${COLOR}${@:2}\033[0m"
+    echo "${COLOR}${@:2}"
 }
 
 #######get params#########
