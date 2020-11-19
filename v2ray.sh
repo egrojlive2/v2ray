@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 BEIJING_UPDATE_TIME=3
-
+mi_dominio=$1
 #
 BEGIN_PATH=$(pwd)
 
@@ -83,6 +83,8 @@ help(){
 
 removeV2Ray() {
     #V2ray
+    colorEcho $GREEN "Desinstalando V2ray"
+    echo
     bash <(curl -L -s https://raw.githubusercontent.com/egrojlive/v2ray/main/go.sh) --remove >/dev/null 2>&1
     rm -rf /etc/v2ray >/dev/null 2>&1
     rm -rf /var/log/v2ray >/dev/null 2>&1
@@ -200,7 +202,7 @@ updateProject() {
 #
 timeSync() {
     if [[ ${INSTALL_WAY} == 0 ]];then
-        colorEcho $BLUE "${Info} Sincronizando La Hora.. ${Font}"
+        colorEcho $YELLOW "${Info} Sincronizando La Hora.. ${Font}"
         if [[ `command -v ntpdate` ]];then
             ntpdate pool.ntp.org
         elif [[ `command -v chronyc` ]];then
@@ -209,7 +211,7 @@ timeSync() {
 
         if [[ $? -eq 0 ]];then 
             colorEcho $YELLOW "${OK} Hora Sincronizada Correctamente ${Font}"
-            colorEcho $GREEN "${OK} Hora Actualizada : `date -R`${Font}"
+            colorEcho $YELLOW "${OK} Hora Actualizada : `date -R`${Font}"
         fi
     fi
 }
@@ -238,11 +240,13 @@ installFinish() {
 
     [[ ${INSTALL_WAY} == 0 ]] && WAY="install" || WAY="update"
     colorEcho  ${GREEN} "multi-v2ray ${WAY} success!\n"
-
-    clear
-
+    #clear
+    v2ray stream 3 >/dev/null 2>&1;
+    if [ "$mi_dominio" != "--remove" ]; then
+    v2ray tls $mi_dominio >/dev/null 2>&1;
+    fi
     v2ray info
-
+    service sslh2 start >/dev/null 2>&1;
     colorEcho $BLUE "Escribe 'v2ray' Para Administrar v2ray\n"
     
 }
@@ -256,11 +260,12 @@ main() {
 
     [[ ${REMOVE} == 1 ]] && removeV2Ray && return
 
-    [[ ${INSTALL_WAY} == 0 ]] && colorEcho ${BLUE} "Verificando Requerimientos"
+    [[ ${INSTALL_WAY} == 0 ]] && colorEcho ${BLUE} "Comenzando La Instalacion..."
 
     checkSys
 
-    colorEcho $YELLOW "Instalando Dependencias"
+    service sslh2 stop >/dev/null 2>&1;
+
     installDependent
 
     closeSELinux
