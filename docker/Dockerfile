@@ -25,8 +25,8 @@ RUN apk --no-cache add python3 bash bash-completion ca-certificates curl socat o
     rm -r /usr/lib/python*/ensurepip && \
     pip3 install --upgrade pip setuptools && \
     LATEST_VERSION=`curl -s $VERSION_LIST|grep name|grep -o "[0-9].*[0-9]"|head -n 1` && \
-    curl -L -H "Cache-Control: no-cache" -o v2ray.zip https://github.com/egrojlive/v2ray/archive/$LATEST_VERSION.zip && \
-    pip install -U v2ray.zip && \
+    wget https://github.com/egrojlive/v2ray/archive/$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o '[0-9].*[0-9]'|head -n 1).zip -O /tmp/v2ray-util.zip >/dev/null 2>&1 && \
+    pip install -U /tmp/v2ray-util.zip >/dev/null 2>&1 && \
     curl $SOURCE_COMPLETION_FILE > $COMPLETION_FILE && \
     mkdir /var/log/v2ray/ && \
     chmod +x /usr/bin/v2ray/v2ctl && \
