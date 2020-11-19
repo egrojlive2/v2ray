@@ -160,11 +160,11 @@ webInstall(){
 }
 
 main(){
-    colorEcho $YELLOW "Verificando Requerimientos"
+    colorEcho $BLUE "Verificando Requerimientos De Python"
     checkSys
-    colorEcho $BLUE "Instalando Dependencias"
+    colorEcho $BLUE "Instalando Dependencias De Python"
     commonDependent
-    colorEcho $RED "Instalando Python $INSTALL_VERSION"
+    colorEcho $BLUE "Instalando Python $INSTALL_VERSION"
     if [[ $LATEST == 1 || $INSTALL_VERSION ]];then
         compileInstall
     else
@@ -172,6 +172,6 @@ main(){
     fi
     # install latest pip
     [[ $NO_PIP == 0 ]] && python3 <(curl -sL https://bootstrap.pypa.io/get-pip.py) >/dev/null 2>&1
-    colorEcho $GREEN "Instalacion Pyton Terminada"
+    colorEcho $BLUE "Instalacion Pyton Terminada"
 }
 main
