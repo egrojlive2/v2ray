@@ -5,7 +5,7 @@ import base64
 
 from .utils import ColorStr
 
-__author__ = 'Jrohy'
+__author__ = 'Jorge'
 
 class Dyport:
     def __init__(self, status=False, aid=0):
@@ -192,7 +192,8 @@ Network: {network}
         }
         json_data = json.dumps(json_dict)
         result_link = "vmess://{}".format(bytes.decode(base64.b64encode(bytes(json_data, 'utf-8'))))
-        return ColorStr.green(result_link)
+        # return ColorStr.green(result_link)
+        return result_link
 
 class Group:
     def __init__(self, ip, port, *, end_port=None, tfo=None, tls="none", dyp=Dyport(), index=0, tag='A'):
