@@ -13,15 +13,24 @@ import urllib.request
 from enum import Enum, unique
 
 class ColorStr:
-    RED = '\033[31m'       # 红色
-    GREEN = '\033[32m'     # 绿色
-    YELLOW = '\033[33m'    # 黄色
-    BLUE = '\033[34m'      # 蓝色
-    FUCHSIA = '\033[35m'   # 紫红色
-    CYAN = '\033[36m'      # 青蓝色
-    WHITE = '\033[37m'     # 白色
+    # RED = '\033[31m'       
+    # GREEN = '\033[32m'     
+    # YELLOW = '\033[33m'    
+    # BLUE = '\033[34m'      
+    # FUCHSIA = '\033[35m'   
+    # CYAN = '\033[36m'      
+    # WHITE = '\033[37m'     
     #: no color
-    RESET = '\033[0m'      # 终端默认颜色
+    RESET = ''      
+    RED = ''       
+    GREEN = ''     
+    YELLOW = ''    
+    BLUE = ''      
+    FUCHSIA = ''   
+    CYAN = ''      
+    WHITE = ''     
+    #: no color
+    RESET = '' 
 
     @classmethod
     def red(cls, s):
