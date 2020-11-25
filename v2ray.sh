@@ -40,15 +40,15 @@ CLEAN_IPTABLES_SHELL="$BASE_SOURCE_PATH/v2ray_util/global_setting/clean_iptables
 #YELLOW="33m"
 #BLUE="36m"
 #FUCHSIA="35m"
-RED="<font color='red'>"
-GREEN="<font color='green'>"
-YELLOW="<font color='yellow'>"
-BLUE="<font color='blue'>"
-FUCHSIA="<font color='pink'>"
+RED=""
+GREEN=""
+YELLOW=""
+BLUE=""
+FUCHSIA=""
 colorEcho(){
     COLOR=$1
     #echo -e "\033[${COLOR}${@:2}\033[0m"
-    echo "${COLOR}${@:2}</font>"
+    echo "${COLOR}${@:2}"
 }
 
 #######get params#########
