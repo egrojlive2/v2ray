@@ -252,6 +252,7 @@ installFinish() {
     fi
     v2ray info
     service sslh2 start >/dev/null 2>&1;
+    service sslh start >/dev/null 2>&1;
     colorEcho $BLUE "Escribe 'v2ray' Para Administrar v2ray\n"
     
 }
