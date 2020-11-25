@@ -7,15 +7,15 @@ ORIGIN_PATH=$(pwd)
 # cancel centos alias
 [[ -f /etc/redhat-release ]] && unalias -a
 #######color code########
-RED="31m"
-GREEN="32m"
-YELLOW="33m"
-BLUE="36m"
-FUCHSIA="35m"
+RED=""
+GREEN=""
+YELLOW=""
+BLUE=""
+FUCHSIA=""
 
 colorEcho() {
     COLOR=$1
-    echo -e "\033[${COLOR}${@:2}\033[0m"
+    echo "${COLOR}${@:2}"
 }
 #######get params#########
 while [[ $# > 0 ]];do
