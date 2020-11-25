@@ -27,10 +27,10 @@ SYSTEMCTL_CMD=$(command -v systemctl 2>/dev/null)
 SERVICE_CMD=$(command -v service 2>/dev/null)
 
 #######color code########
-RED="31m"      # Error message
-GREEN="32m"    # Success message
-YELLOW="33m"   # Warning message
-BLUE="36m"     # Info message
+RED=""      # Error message
+GREEN=""    # Success message
+YELLOW=""   # Warning message
+BLUE=""     # Info message
 
 
 #########################
@@ -84,7 +84,7 @@ done
 
 ###############################
 colorEcho(){
-    echo -e "\033[${1}${@:2}\033[0m" 1>& 2
+    echo "${1}${@:2}"
 }
 
 archAffix(){
