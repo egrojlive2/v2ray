@@ -1,7 +1,17 @@
 #!/bin/bash
-#
-BEIJING_UPDATE_TIME=3
+mi_dominio=''
+v_ser=$(netstat -tunlp | grep 443 | awk '{print $4}' | cut -d ":" -f2)
+if [ "$v_ser" == "443" ]; then
+echo "Primero Deten El Servicio Que Estes Utilizando En El Puerto 443 Y Vuelve A Ejecutar El Script"
+exit 0
+fi
+
+if [ $1 ]; then
 mi_dominio=$1
+fi
+
+BEIJING_UPDATE_TIME=3
+
 #
 BEGIN_PATH=$(pwd)
 
@@ -247,12 +257,13 @@ installFinish() {
     colorEcho  ${GREEN} "multi-v2ray ${WAY} success!\n"
     #clear
     v2ray stream 3 >/dev/null 2>&1;
-    if [ "$mi_dominio" != "--remove" ]; then
+    if [ "$mi_dominio" != "--remove" && "$mi_dominio" != "" ]; then
     v2ray tls $mi_dominio >/dev/null 2>&1;
     fi
     v2ray info
     service sslh2 start >/dev/null 2>&1;
     service sslh start >/dev/null 2>&1;
+    systemctl restart proxypy.service >/dev/null 2>&1;
     colorEcho $BLUE "Escribe 'v2ray' Para Administrar v2ray\n"
     
 }
@@ -271,6 +282,8 @@ main() {
     checkSys
 
     service sslh2 stop >/dev/null 2>&1;
+    service sslh stop >/dev/null 2>&1;
+    systemctl stop proxypy.service >/dev/null 2>&1;
 
     installDependent
 
