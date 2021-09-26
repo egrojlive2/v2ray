@@ -182,6 +182,7 @@ updateProject() {
     [[ ! $(type pip 2>/dev/null) ]] && colorEcho $RED "pip no install!" && exit 1
     
     #pip install -U v2ray_util
+    rm /tmp/v2ray-util.zip >/dev/null 2>&1
     vvv=$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o "[0-9].*[0-9]"|head -n 1)
     wget https://github.com/egrojlive/v2ray/archive/$vvv.zip -O /tmp/v2ray-util.zip >/dev/null 2>&1
     pip install -U /tmp/v2ray-util.zip >/dev/null 2>&1
@@ -219,9 +220,9 @@ timeSync() {
     if [[ ${INSTALL_WAY} == 0 ]];then
         colorEcho $YELLOW "${Info} Sincronizando La Hora.. ${Font}"
         if [[ `command -v ntpdate` ]];then
-            ntpdate pool.ntp.org
+            ntpdate pool.ntp.org >/dev/null 2>&1
         elif [[ `command -v chronyc` ]];then
-            chronyc -a makestep
+            chronyc -a makestep >/dev/null 2>&1
         fi
 
         if [[ $? -eq 0 ]];then 
