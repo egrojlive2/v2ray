@@ -73,7 +73,14 @@ def parse_arg():
         elif sys.argv[1] == "port":
             base.port()
         elif sys.argv[1] == "tls":
-            tls.modify()
+            if len(sys.argv) == 1:
+                dominio = readchar_("Ingresa Un Dominio: ")
+                if not dominio:
+                    return
+                else:
+                    tls.modify(dominio)
+            else:
+                tls.modify(sys.argv[2])
         elif sys.argv[1] == "tfo":
             base.tfo()
         elif sys.argv[1] == "stream":
@@ -100,11 +107,11 @@ def parse_arg():
             V2ray.log()
         elif sys.argv[1] == "cdn":
             cdn.modify()
-    elif len(sys.argv) == 3:
-        if sys.argv[1] == "stream":
-            stream.modify(sys.argv[2])
-        elif sys.argv[1] == "tls":
-            tls.modify(sys.argv[2])
+        elif len(sys.argv) == 3:
+            if sys.argv[1] == "stream":
+                stream.modify(sys.argv[2])
+            elif sys.argv[1] == "tls":
+                tls.modify(sys.argv[2])
     else:
         if sys.argv[1] == "add":
             multiple.new_port(sys.argv[2])
