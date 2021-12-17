@@ -44,7 +44,7 @@ def help():
 
 def updateSh():
     if os.path.exists("/.dockerenv"):
-        subprocess.Popen("wget https://github.com/egrojlive/v2ray/archive/$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o '[0-9].*[0-9]'|head -n 1).zip -O /tmp/v2ray-util.zip >/dev/null 2>&1")
+        subprocess.Popen("wget https://github.com/egrojlive/v2ray/archive/$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o '[0-9].*[0-9]'|head -n 1).zip -O /tmp/v2ray-util.zip >/dev/null 2>&1", shell=True).wait()
         subprocess.Popen("pip install -U /tmp/v2ray-util.zip >/dev/null 2>&1", shell=True).wait()
         subprocess.Popen("rm -r /tmp/v2ray-util.zip >/dev/null 2>&1", shell=True).wait()
     else:
@@ -73,14 +73,7 @@ def parse_arg():
         elif sys.argv[1] == "port":
             base.port()
         elif sys.argv[1] == "tls":
-            if len(sys.argv) == 1:
-                dominio = readchar_("Ingresa Un Dominio: ")
-                if not dominio:
-                    return
-                else:
-                    tls.modify(dominio)
-            else:
-                tls.modify(sys.argv[2])
+            tls.modify()
         elif sys.argv[1] == "tfo":
             base.tfo()
         elif sys.argv[1] == "stream":
