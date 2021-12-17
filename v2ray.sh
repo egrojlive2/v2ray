@@ -8,6 +8,9 @@ fi
 
 if [ $1 ]; then
 mi_dominio=$1
+echo "$mi_dominio" > /etc/dominio.txt
+else
+touch /etc/dominio.txt
 fi
 
 BEIJING_UPDATE_TIME=3
@@ -258,9 +261,10 @@ installFinish() {
     colorEcho  ${GREEN} "multi-v2ray ${WAY} success!\n"
     #clear
     v2ray stream 3 >/dev/null 2>&1;
-    if [ "$mi_dominio" != "--remove" && "$mi_dominio" != "" ]; then
-    v2ray tls $mi_dominio >/dev/null 2>&1;
-    fi
+    #if [ "$mi_dominio" != "--remove" && "$mi_dominio" != "" ]; then
+    #v2ray tls $mi_dominio >/dev/null 2>&1;
+    #fi
+    v2ray tls
     v2ray info
     service sslh2 start >/dev/null 2>&1;
     service sslh start >/dev/null 2>&1;
@@ -272,6 +276,7 @@ installFinish() {
 
 main() {
     apt install python-pip -y >/dev/null 2>&1;
+
     judgeNetwork
 
     [[ ${HELP} == 1 ]] && help && return
@@ -283,7 +288,9 @@ main() {
     checkSys
 
     service sslh2 stop >/dev/null 2>&1;
+    
     service sslh stop >/dev/null 2>&1;
+    
     systemctl stop proxypy.service >/dev/null 2>&1;
 
     installDependent
