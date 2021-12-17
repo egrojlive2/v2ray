@@ -44,7 +44,7 @@ def help():
 
 def updateSh():
     if os.path.exists("/.dockerenv"):
-        subprocess.Popen("wget https://github.com/egrojlive/v2ray/archive/$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o '[0-9].*[0-9]'|head -n 1).zip -O /tmp/v2ray-util.zip >/dev/null 2>&1")
+        subprocess.Popen("wget https://github.com/egrojlive/v2ray/archive/$(curl -s https://api.github.com/repos/egrojlive/v2ray/tags |grep name|grep -o '[0-9].*[0-9]'|head -n 1).zip -O /tmp/v2ray-util.zip >/dev/null 2>&1", shell=True).wait()
         subprocess.Popen("pip install -U /tmp/v2ray-util.zip >/dev/null 2>&1", shell=True).wait()
         subprocess.Popen("rm -r /tmp/v2ray-util.zip >/dev/null 2>&1", shell=True).wait()
     else:
